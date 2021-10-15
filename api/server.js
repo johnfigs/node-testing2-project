@@ -27,6 +27,15 @@ server.post('/api/users/', (req, res, next) => {
         .catch(next)
 })
 
+server.delete('/api/users/:id', async (req, res, next) => {
+    const deletedUser = await Users.getById(req.params.id)
+    Users.remove(req.params.id)
+        .then( () => {
+            res.status(200).json(deletedUser)
+        })
+        .catch(next)
+})
+
 server.use((err, req, res, next) => { // eslint-disable-line
     res.status(err.status || 500).json({
       message: err.message,

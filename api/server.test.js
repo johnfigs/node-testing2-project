@@ -42,4 +42,17 @@ describe('[GET] /api/users', () => {
     })
   })
 
+  describe('[DELETE] /api/users/:id', () => {
+      let res
+      beforeEach(async () => {
+           res = await request(server).delete('/api/users/1')
+      })
+      it('responds with a 200 deleted', () => {
+          expect(res.status).toBe(200)
+      })
+      it('responds with the deleted user', () => {
+          expect(res.body).toMatchObject({id: 1, username: 'Mabel'})
+      })
+  })
+
 
