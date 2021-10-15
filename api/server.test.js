@@ -15,7 +15,7 @@ afterAll(async () => {
     await db.destroy()
 })
 
-describe('[GET] /users', () => {
+describe('[GET] /api/users', () => {
     let res
     beforeEach(async () => {
       res = await request(server).get('/api/users/')
@@ -28,5 +28,18 @@ describe('[GET] /users', () => {
     })
   })
 
+  describe('[POST] /api/users/', () => {
+      let res
+      beforeEach(async () => {
+          res = await request(server).post('/api/users/').send({username: 'Jess' })
+      })
+      it('responds with 201 created', async () => {
+          expect(res.status).toBe(201)
+      })
+      it('causes a user to be added to the db', async () => {
+        const users = await db('users')
+        expect(users).toHaveLength(4)
+    })
+  })
 
 

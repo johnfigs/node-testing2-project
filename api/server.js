@@ -19,6 +19,14 @@ server.get('/api/users/', (req, res, next) => {
         .catch(next)
 })
 
+server.post('/api/users/', (req, res, next) => {
+    Users.insert(req.body)
+        .then(user => {
+            res.status(201).json(user)
+        })
+        .catch(next)
+})
+
 server.use((err, req, res, next) => { // eslint-disable-line
     res.status(err.status || 500).json({
       message: err.message,
